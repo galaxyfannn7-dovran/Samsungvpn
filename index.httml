@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="tk" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dovranvpn</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0b12;--card:#15151f;--line:#26263a;--tx:#f2f2f8;--mut:#8b8ba3;--acc:#8b7cf6;--err:#ff6b7a;--ok:#3ddc97;--warn:#f5a524;--blue:#38bdf8;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(600px 400px at 50% -10%,#2a2150 0,var(--bg) 70%) var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;justify-content:center;padding:16px}
+body.in{align-items:flex-start}body.out{align-items:center}
+.card{width:100%;max-width:380px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:28px 22px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.logo{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--acc),#5b4bd8);display:grid;place-items:center;font-size:26px;margin:0 auto 16px;box-shadow:0 8px 24px rgba(139,124,246,.4)}
+h1{font-size:22px;text-align:center;margin:0 0 4px}
+p.sub{text-align:center;color:var(--mut);font-size:14px;margin:0 0 22px}
+label{display:block;font-size:13px;color:var(--mut);margin:14px 0 6px}
+.f{position:relative}
+input,select{width:100%;background:#0e0e17;border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--tx);font-size:15px;outline:none;font-family:inherit}
+input:focus,select:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(139,124,246,.2)}
+.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--mut);font-size:13px;padding:10px;cursor:pointer}
+button.go{width:100%;margin-top:22px;border:0;border-radius:14px;padding:14px;font-size:16px;font-weight:600;color:#fff;background:linear-gradient(135deg,var(--acc),#6a58ea);cursor:pointer}
+.err{color:var(--err);font-size:13px;text-align:center;min-height:18px;margin-top:12px}
+#app{display:none;width:100%;max-width:520px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.top h2{margin:0;font-size:18px}.top small{color:var(--mut);display:block;font-size:12px;font-weight:400}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px}
+.tab{flex:none;background:var(--card);border:1px solid var(--line);color:var(--mut);border-radius:12px;padding:10px 14px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.tab.on{background:linear-gradient(135deg,#9a8cff,#7b69f0);color:#fff;border-color:transparent}
+.b{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:12px;padding:10px 14px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.b.red{color:var(--err);border-color:#5a2a35;background:#1d1219}
+.b.pri{background:linear-gradient(135deg,#9a8cff,#7b69f0);border:0;color:#fff}
+.b.s{padding:6px 10px;font-size:12px;border-radius:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.st{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.st div{font-size:13px;color:var(--mut)}.st b{display:block;font-size:30px;margin-top:6px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;background:var(--ok)}
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+.box h3{margin:0 0 10px;font-size:15px;color:var(--mut)}
+.fr{display:flex;gap:8px;flex-wrap:wrap}.fr>*{flex:1;min-width:110px}
+.it{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#0e0e17;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px;font-size:14px}
+.it .n{font-weight:600}.it small{display:block;color:var(--mut);font-size:12px;font-weight:400;overflow-wrap:anywhere}
+.ac{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;border-radius:6px;padding:2px 7px;margin-left:6px;font-weight:600}
+.g{background:#12301f;color:var(--ok)}.r{background:#3a1820;color:var(--err)}.y{background:#3a2c10;color:var(--warn)}
+.hint{font-size:13px;color:#6a6a84;margin:6px 2px}
+.tm{color:var(--warn);font-size:20px;font-weight:700;margin-top:4px}
+.ok{color:var(--ok);font-size:12px;min-height:16px;margin-top:6px}
+</style>
+</head>
+<body class="out">
+<main class="card" id="login">
+  <div class="logo">🛡️</div>
+  <h1>Dovranvpn</h1>
+  <p class="sub">Dowam etmek üçin adyňyzy we kodyňyzy giriziň</p>
+  <label for="n">Ady</label>
+  <div class="f"><input id="n" autocomplete="username" placeholder="Adyňyz"></div>
+  <label for="c">Kod</label>
+  <div class="f"><input id="c" type="password" autocomplete="current-password" placeholder="••••••"><button class="eye" id="eye" type="button">Görkez</button></div>
+  <div class="err" id="err"></div>
+  <button class="go" id="go" type="button">Içeri girmek</button>
+</main>
+
+<div id="app">
+  <div class="top">
+    <h2 id="ttl">Dovranvpn<small id="who"></small></h2>
+    <button class="b red" data-a="logout" type="button">Log out</button>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <div id="view"></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const hash=s=>{let a=0xdeadbeef,b=0x41c6ce57;for(let i=0;i<s.length;i++){const c=s.charCodeAt(i);a=Math.imul(a^c,2654435761);b=Math.imul(b^c,1597334677)}a=Math.imul(a^a>>>16,2246822507)^Math.imul(b^b>>>13,3266489909);b=Math.imul(b^b>>>16,2246822507)^Math.imul(a^a>>>13,3266489909);return (4294967296*(2097151&b)+(a>>>0)).toString(36)};
+const enc=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const dec=q=>JSON.parse(decodeURIComponent(escape(atob(q.replace(/-/g,'+').replace(/_/g,'/')))));
+function getP(){try{const q=new URLSearchParams(location.search).get('u')||(location.hash.match(/u=([^&]+)/)||[])[1];return q?dec(q):null}catch(e){return null}}
+function load(){try{const d=JSON.parse(localStorage.getItem('dv_admin')||'');if(d&&d.users)return d}catch(e){}return{users:[],codes:[],pass:'dovran1234'}}
+const P=getP();let S=load(),T='dash',timer;
+const save=()=>{try{localStorage.setItem('dv_admin',JSON.stringify(S))}catch(e){}};
+const TABS=[['dash','Dashboard'],['users','Users'],['srv','Servers'],['set','Settings']];
+const fmt=ms=>{if(ms<=0)return'Gutardy';let s=Math.floor(ms/1000);const d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);s%=60;const p=n=>String(n).padStart(2,'0');return(d?d+' gün ':'')+h+' sag '+p(m)+' min '+p(s)+' sek'};
+const label=(s,i)=>{try{return 'Server '+(i+1)+' — '+new URL(s).host}catch(e){return 'Server '+(i+1)}};
+function build(s,name){
+  if(s.startsWith('vmess://')){try{const o=JSON.parse(atob(s.slice(8)));o.ps=name;return 'vmess://'+btoa(JSON.stringify(o))}catch(e){}}
+  const i=s.indexOf('#');return(i>=0?s.slice(0,i):s)+'#'+encodeURIComponent(name);
+}
+function link(u){return location.origin+location.pathname+'?u='+enc({n:u.name,h:hash(u.code),e:u.exp,s:S.codes})}
+
+function adminView(){
+  $('tabs').innerHTML=TABS.map(t=>`<button class="tab ${T===t[0]?'on':''}" data-a="tab" data-id="${t[0]}" type="button">${t[1]}</button>`).join('');
+  let h='';
+  if(T==='dash'){
+    const act=S.users.filter(u=>u.exp>Date.now()).length;
+    h=`<div class="hint"><span class="dot"></span>Internet connected</div><div class="grid">
+    <div class="st"><div><span class="dot" style="background:var(--blue)"></span>Users</div><b>${S.users.length}</b></div>
+    <div class="st"><div><span class="dot"></span>Active</div><b>${act}</b></div>
+    <div class="st"><div><span class="dot" style="background:var(--acc)"></span>Servers</div><b>${S.codes.length}</b></div>
+    <div class="st"><div><span class="dot" style="background:var(--warn)"></span>Gutardy</div><b>${S.users.length-act}</b></div></div>
+    <div class="box"><div class="fr"><button class="b pri" data-a="tab" data-id="users" type="button">+ New user</button><button class="b" data-a="tab" data-id="srv" type="button">+ Add server</button></div></div>`;
+  }
+  if(T==='users'){
+    h=`<div class="box"><h3>Täze ulanyjy (satyn alan adam)</h3><div class="fr"><input id="un" placeholder="Ady"><input id="uc" placeholder="Kod"><select id="ud"><option value="7">7 gün</option><option value="30" selected>30 gün</option><option value="90">90 gün</option></select></div>
+    <div class="fr" style="margin-top:8px"><button class="b" data-a="gen" type="button">🎲 Kod döret</button><button class="b pri" data-a="addUser" type="button">+ Ulanyjy goş</button></div><div class="err" id="e1"></div></div>`+
+    (S.users.map(u=>`<div class="it"><div><span class="n">${esc(u.name)}</span>${u.exp>Date.now()?'<span class="tag g">Active</span>':'<span class="tag y">Gutardy</span>'}
+    <small>Kod: ${esc(u.code)} · ${new Date(u.exp).toLocaleDateString()} çenli</small></div>
+    <div class="ac"><button class="b s pri" data-a="lnk" data-id="${u.id}" type="button">Link</button><button class="b s" data-a="ext" data-id="${u.id}" type="button">+30</button><button class="b s red" data-a="delU" data-id="${u.id}" type="button">✕</button></div></div>`).join('')||'<p class="hint">Entek ulanyjy ýok.</p>')+
+    '<div class="ok" id="ok"></div><p class="hint">“Link” — ulanyjy üçin link göçürýär. Linki satyn alan adama iberiň, ol ady we koduňyz bilen girer.</p>';
+  }
+  if(T==='srv'){
+    h=`<div class="box"><h3>Admin serverleri (VLESS / SOCKS / VMESS)</h3><div class="fr"><input id="ci" placeholder="vless://… ýa-da socks://…"></div>
+    <div style="margin-top:8px"><button class="b pri" data-a="addC" type="button">+ Add server</button></div></div>`+
+    (S.codes.map((c,i)=>`<div class="it"><small style="flex:1">${esc(c)}</small><div class="ac"><button class="b s" data-a="cp" data-id="${i}" type="button">Copy</button><button class="b s red" data-a="delC" data-id="${i}" type="button">✕</button></div></div>`).join('')||'<p class="hint">Entek server goşulmady.</p>')+
+    '<p class="hint">Serveri üýtgetseňiz ýa-da goşsaňyz, ulanyjylara täze “Link” iberiň.</p>';
+  }
+  if(T==='set'){
+    h=`<div class="box"><h3>Admin kody</h3><div class="fr"><input id="np" type="password" placeholder="Täze kod (iň az 6 belgi)"></div>
+    <div style="margin-top:8px"><button class="b pri" data-a="newPass" type="button">Kody çalyş</button></div><div class="err" id="e2"></div></div>
+    <div class="box"><h3>Maglumatlar</h3><div class="fr"><button class="b" data-a="exp" type="button">Export (copy JSON)</button><button class="b red" data-a="reset" type="button">Hemmesini poz</button></div>
+    <p class="hint">Admin maglumatlary diňe şu enjamda (brauzerde) saklanýar.</p></div>`;
+  }
+  $('view').innerHTML=h;
+}
+function userView(){
+  $('tabs').innerHTML='';clearInterval(timer);
+  $('view').innerHTML=`<div class="box"><h3>Galan wagt</h3><div class="tm" id="tm"></div></div>
+  <div class="box"><h3>VPN code builder</h3><label style="margin-top:0">Koduň ady (diňe şuny üýtgedip bilersiňiz)</label><input id="rn" value="${esc(P.n)}" maxlength="40">
+  <div id="sl"></div><div class="ok" id="ok"></div></div>`;
+  const draw=()=>{const left=P.e-Date.now();$('tm').textContent=fmt(left);
+    if(!$('sl').dataset.d||(left<=0)!==($('sl').dataset.x==='1')){$('sl').dataset.d=1;$('sl').dataset.x=left<=0?'1':'0';
+      $('sl').innerHTML=left<=0?'<p class="hint">Möhletiňiz gutardy. Admin bilen habarlaşyň.</p>':P.s.map((s,i)=>`<div class="it"><div><span class="n">${esc(label(s,i))}</span></div><button class="b s pri" data-a="ucp" data-id="${i}" type="button">Copy</button></div>`).join('')||'<p class="hint">Entek server ýok.</p>'}};
+  draw();timer=setInterval(draw,1000);
+}
+function enter(){
+  const n=$('n').value.trim(),c=$('c').value.trim();
+  if(!n||!c){$('err').textContent='Ady we kody giriziň';return}
+  if(P){
+    if(n.toLowerCase()!==String(P.n).toLowerCase()||hash(c)!==P.h){$('err').textContent='Ady ýa-da kod nädogry';return}
+    $('who').textContent=P.n;show(true);userView();return;
+  }
+  if(c!==S.pass){$('err').textContent='Kod nädogry';return}
+  $('who').textContent='Admin: '+n;show(true);T='dash';adminView();
+}
+function show(on){$('login').style.display=on?'none':'block';$('app').style.display=on?'block':'none';document.body.className=on?'in':'out';if(!on)clearInterval(timer)}
+const flash=t=>{const o=$('ok');if(o)o.textContent=t};
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;
+  const a=b.dataset.a,id=b.dataset.id;
+  const cp=t=>{try{navigator.clipboard.writeText(t);flash('Göçürildi ✓')}catch(x){flash('Göçürip bolmady')}};
+  if(a==='logout'){$('c').value='';show(false);return}
+  if(a==='ucp'){const nm=($('rn').value.trim()||P.n);cp(build(P.s[id],nm));return}
+  if(a==='gen'){$('uc').value=Math.random().toString(36).slice(2,10);return}
+  if(a==='lnk'){cp(link(S.users.find(x=>x.id===id)));return}
+  if(a==='cp'){try{navigator.clipboard.writeText(S.codes[id]);b.textContent='✓'}catch(x){}return}
+  if(a==='tab'){T=id}
+  else if(a==='addUser'){const n=$('un').value.trim(),c=$('uc').value.trim();if(!n||!c){$('e1').textContent='Ady we kody giriziň';return}S.users.push({id:uid(),name:n,code:c,exp:Date.now()+Number($('ud').value)*864e5})}
+  else if(a==='ext'){const u=S.users.find(x=>x.id===id);u.exp=Math.max(u.exp,Date.now())+30*864e5}
+  else if(a==='delU'){S.users=S.users.filter(x=>x.id!==id)}
+  else if(a==='addC'){const v=$('ci').value.trim();if(!v)return;S.codes.push(v)}
+  else if(a==='delC'){S.codes.splice(Number(id),1)}
+  else if(a==='newPass'){const v=$('np').value.trim();if(v.length<6){$('e2').textContent='Kod iň az 6 belgi bolmaly';return}S.pass=v}
+  else if(a==='exp'){try{navigator.clipboard.writeText(JSON.stringify(S));b.textContent='Copied ✓'}catch(x){}return}
+  else if(a==='reset'){if(!confirm('Hemme maglumat pozulsynmy?'))return;S={users:[],codes:[],pass:S.pass}}
+  else return;
+  save();adminView();
+});
+$('go').onclick=enter;
+['n','c'].forEach(i=>$(i).addEventListener('keydown',e=>{if(e.key==='Enter')enter()}));
+$('eye').onclick=()=>{const q=$('c').type==='password';$('c').type=q?'text':'password';$('eye').textContent=q?'Gizle':'Görkez'};
+</script>
+</body>
+</html>
